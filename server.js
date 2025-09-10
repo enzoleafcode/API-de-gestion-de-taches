@@ -21,7 +21,7 @@ app.get("/tasks", (req, res) => {
 
 // Ajouter une tâche
 app.post("/tasks", (req, res) => {
-  const { title } = req.body;
+  const { title, completed = 0 } = req.body;
   if (!title) {
     return res.status(400).json({ error: "Le champ 'title' est requis" });
   }
@@ -29,7 +29,7 @@ app.post("/tasks", (req, res) => {
   const newTask = {
     id: idCounter++,
     title,
-    completed: false,
+    completed: Number(completed) === 1 ? "completed" : "not completed",
   };
 
   tasks.push(newTask);

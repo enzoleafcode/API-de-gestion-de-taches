@@ -14,8 +14,17 @@ app.get("/", (req, res) => {
   res.send("Bienvenue sur mon API de tâches !");
 });
 
-// Lire toutes les tâches
+// Lire toutes les tâches + filtrage par statut
 app.get("/tasks", (req, res) => {
+  const { status } = req.query;
+
+  if (status) {
+    const filteredTasks = tasks.filter(
+      (t) => t.completed.toLowerCase() === status.toLowerCase()
+    );
+    return res.json(filteredTasks);
+  }
+
   res.json(tasks);
 });
 
